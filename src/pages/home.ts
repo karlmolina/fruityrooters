@@ -11,6 +11,11 @@ const page = (children: HTMLElement) => {
   return html`<div class="p-0">${children}</div>`
 }
 
+const discordInviteLink = 'https://discord.com/invite/SdvajBsGbr'
+const instagramLink = 'https://instagram.com/fruityrooters'
+const calendarLink =
+  'https://calendar.google.com/calendar/u/0/embed?src=5dc1d060720578b11a4b231f2687f7f29b1a3238731037f38a083ce7ef041e33@group.calendar.google.com&ctz=America/Denver&mode=AGENDA'
+
 export default () => {
   return page(
     html`<div class="p-5 text-xl sm:text-3xl">
@@ -26,21 +31,21 @@ export default () => {
         </div>
         <div class="flex flex-col gap-3 text-gray-800 sm:block">
           <a
-            href="https://discord.com/"
+            href="${discordInviteLink}"
             target="_blank"
             class="underline hover:underline"
             >Discord</a
           >
           <p class="hidden px-5 md:inline">|</p>
           <a
-            href="https://instagram.com/fruityrooters"
+            href="${instagramLink}"
             target="_blank"
             class="underline hover:underline"
             >Instagram</a
           >
           <p class="hidden px-5 md:inline">|</p>
           <a
-            href="https://discord.com/"
+            href="${calendarLink}
             target="_blank"
             class="underline hover:underline"
             >Calendar</a
