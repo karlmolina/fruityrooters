@@ -45,7 +45,7 @@ export default () => {
           >
           <p class="hidden px-5 md:inline">|</p>
           <a
-            href="${calendarLink}
+            href="${calendarLink}"
             target="_blank"
             class="underline hover:underline"
             >Calendar</a
