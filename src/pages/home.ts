@@ -16,7 +16,7 @@ export default () => {
     html`<div class="p-5 text-xl sm:text-3xl">
       ${background()}
       <h1
-        class="font-jaro text-[30vw] leading-[24vw] text-[#43238c] xl:text-[400px] xl:leading-[319px]"
+        class="font-jaro text-[30vw] leading-[24vw] text-[#43238c]/[0.9] xl:text-[400px] xl:leading-[319px]"
       >
         fruity rooters
       </h1>
