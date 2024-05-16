@@ -23,6 +23,7 @@ export default {
           '"Segoe UI Symbol"',
           '"Noto Color Emoji"',
         ],
+        jaro: ['"Jaro"', 'sans-serif'],
       },
     },
   },
