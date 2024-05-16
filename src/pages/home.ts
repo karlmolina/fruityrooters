@@ -2,15 +2,8 @@ import { html } from 'htl'
 
 const background = () => {
   return html`<div
-    class="fixed bottom-0 left-0 right-0 top-[-99px] -z-10 flex rainbow"
-  >
-    <!-- <div class="w-1/6 bg-red-500"></div> -->
-    <!-- <div class="w-1/6 bg-orange-500"></div> -->
-    <!-- <div class="w-1/6 bg-yellow-500"></div> -->
-    <!-- <div class="w-1/6 bg-green-500"></div> -->
-    <!-- <div class="w-1/6 bg-blue-500"></div> -->
-    <!-- <div class="w-1/6 bg-violet-500"></div> -->
-  </div>`
+    class="rainbow fixed bottom-0 left-0 right-0 top-[-99px] -z-10 flex"
+  />`
 }
 
 const page = (children: HTMLElement) => {
@@ -23,7 +16,7 @@ export default () => {
     html`<div class="p-5 text-xl sm:text-3xl">
       ${background()}
       <h1
-        class="font-jaro text-[30vw] leading-[24vw] text-gray-900 xl:text-[400px] xl:leading-[319px]"
+        class="font-jaro text-[30vw] leading-[24vw] text-[#43238c] xl:text-[400px] xl:leading-[319px]"
       >
         fruity rooters
       </h1>
@@ -40,17 +33,17 @@ export default () => {
           >
           <p class="hidden px-5 md:inline">|</p>
           <a
-            href="https://discord.com/"
-            target="_blank"
-            class="underline hover:underline"
-            >Calendar</a
-          >
-          <p class="hidden px-5 md:inline">|</p>
-          <a
             href="https://instagram.com/fruityrooters"
             target="_blank"
             class="underline hover:underline"
             >Instagram</a
+          >
+          <p class="hidden px-5 md:inline">|</p>
+          <a
+            href="https://discord.com/"
+            target="_blank"
+            class="underline hover:underline"
+            >Calendar</a
           >
         </div>
       </div>
