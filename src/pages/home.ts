@@ -15,6 +15,7 @@ const discordInviteLink = 'https://discord.com/invite/SdvajBsGbr'
 const instagramLink = 'https://instagram.com/fruityrooters'
 const calendarLink =
   'https://calendar.google.com/calendar/u/0/embed?src=5dc1d060720578b11a4b231f2687f7f29b1a3238731037f38a083ce7ef041e33@group.calendar.google.com&ctz=America/Denver&mode=AGENDA'
+const whatsAppLink = 'https://chat.whatsapp.com/J5X4v2bGKpQJd8t6Z5qXKq'
 
 export default () => {
   return page(
@@ -35,6 +36,13 @@ export default () => {
             target="_blank"
             class="underline hover:underline"
             >Discord</a
+          >
+          <p class="hidden px-5 md:inline">|</p>
+          <a
+            href="${whatsAppLink}"
+            target="_blank"
+            class="underline hover:underline"
+            >WhatsApp</a
           >
           <p class="hidden px-5 md:inline">|</p>
           <a
