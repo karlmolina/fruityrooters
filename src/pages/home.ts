@@ -19,38 +19,26 @@ const calendarLink =
 // 'https://formspree.io/f/abcdwxyz'.
 const contactFormEndpoint = 'https://formspree.io/f/YOUR_FORM_ID'
 
-// Every image in src/assets/photos is bundled and shown in the photo grid.
-const photoModules = import.meta.glob<string>(
-  '../assets/photos/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP}',
-  { eager: true, import: 'default' },
-)
-const photos = Object.keys(photoModules)
-  .sort()
-  .map((path) => photoModules[path])
+// Instagram's profile embed shows the account header and a grid of the
+// latest posts, so new posts appear on the site automatically.
+const instagramEmbedLink = 'https://www.instagram.com/fruityrooters/embed'
 
-const photoGrid = () => {
-  if (photos.length === 0) return null
+const photos = () => {
   return html`<section class="mt-14 md:mt-20">
     <h2 class="mb-5 font-jaro text-5xl text-[#43238c]/[0.9] sm:text-7xl">
       photos
     </h2>
-    <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
-      ${photos.map(
-        (src) =>
-          html`<a href="${instagramLink}" target="_blank" class="block">
-            <img
-              src="${src}"
-              alt="Fruity Rooters on Instagram"
-              loading="lazy"
-              class="aspect-square w-full rounded object-cover shadow-md"
-            />
-          </a>`,
-      )}
-    </div>
+    <iframe
+      src="${instagramEmbedLink}"
+      title="Fruity Rooters on Instagram"
+      loading="lazy"
+      scrolling="no"
+      allowtransparency="true"
+      class="h-[640px] w-full max-w-xl rounded bg-white shadow-md sm:h-[760px]"
+    ></iframe>
     <p class="mt-4 text-gray-800">
       More on
-      <a href="${instagramLink}" target="_blank" class="underline"
-        >Instagram</a
+      <a href="${instagramLink}" target="_blank" class="underline">Instagram</a
       >.
     </p>
   </section>`
@@ -153,7 +141,7 @@ export default () => {
           <p class="hidden px-5 md:inline">|</p>
           <a href="#contact" class="underline hover:underline">Contact</a>
         </div>
-        ${photoGrid()} ${contactForm()}
+        ${photos()} ${contactForm()}
       </div>
     </div>`,
   )
