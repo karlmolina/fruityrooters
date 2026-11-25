@@ -1,6 +1,14 @@
 name: Deploy static content to cloudflare pages
 
-on: [push]
+# Every push deploys to Cloudflare Pages. Pushes to main go to production
+# (fruityrooters.com); pushes to any other branch become a preview deployment,
+# and if the branch has an open pull request the preview link is posted on it.
+# Opening a pull request also triggers a deploy, so the link appears right away
+# even when the branch was pushed before the pull request existed.
+on:
+  push:
+  pull_request:
+    types: [opened, reopened]
 
 jobs:
   deploy-cloudflare:
@@ -8,21 +16,65 @@ jobs:
     permissions:
       contents: read
       deployments: write
+      pull-requests: write
     name: Deploy to Cloudflare Pages
+    env:
+      BRANCH: ${{ github.head_ref || github.ref_name }}
+      SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SHA }}
       - name: Set up Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
       - name: Install dependencies
         run: bun install
       - name: Build
         run: bun run build
       - name: Publish
-        uses: cloudflare/pages-action@1
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: fruityrooters
-          directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy dist --project-name=fruityrooters --branch=${{ env.BRANCH }} --commit-hash=${{ env.SHA }}
+      - name: Comment preview link on pull request
+        if: env.BRANCH != 'main'
+        uses: actions/github-script@v7
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
+          ALIAS_URL: ${{ steps.deploy.outputs.pages-deployment-alias-url }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const branch = process.env.BRANCH;
+            const sha = process.env.SHA;
+            const { data: prs } = await github.rest.pulls.list({
+              owner, repo, state: 'open', head: `${owner}:${branch}`,
+            });
+            if (prs.length === 0) {
+              core.info(`No open pull request for ${branch}; skipping comment.`);
+              return;
+            }
+            const marker = '<!-- cloudflare-preview -->';
+            const alias = process.env.ALIAS_URL;
+            const body = [
+              marker,
+              '### Preview deployment',
+              '',
+              alias ? `**Branch preview (always latest):** ${alias}` : null,
+              `**This commit (${sha.slice(0, 7)}):** ${process.env.DEPLOYMENT_URL}`,
+            ].filter((line) => line !== null).join('\n');
+            for (const pr of prs) {
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner, repo, issue_number: pr.number,
+              });
+              const existing = comments.find((c) => c.body && c.body.includes(marker));
+              if (existing) {
+                await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+              } else {
+                await github.rest.issues.createComment({ owner, repo, issue_number: pr.number, body });
+              }
+            }
