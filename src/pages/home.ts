@@ -15,9 +15,7 @@ const calendarLink =
   'https://calendar.google.com/calendar/u/0/embed?src=5dc1d060720578b11a4b231f2687f7f29b1a3238731037f38a083ce7ef041e33@group.calendar.google.com&ctz=America/Denver&mode=AGENDA'
 
 // Contact form submissions are sent with Formspree (https://formspree.io).
-// Create a free form there, then paste its endpoint here, e.g.
-// 'https://formspree.io/f/abcdwxyz'.
-const contactFormEndpoint = 'https://formspree.io/f/YOUR_FORM_ID'
+const contactFormEndpoint = 'https://formspree.io/f/mljbzavb'
 
 // Instagram's profile embed shows the account header and a grid of the
 // latest posts, so new posts appear on the site automatically.
