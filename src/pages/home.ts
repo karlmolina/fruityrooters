@@ -106,8 +106,8 @@ const contactForm = () => {
       contact
     </h2>
     <p class="mb-5 max-w-xl text-lg text-gray-800 sm:text-xl">
-      Reach out to get the invite to future events! Tell us a bit about
-      yourself and what makes you interested in joining the group.
+      Reach out to get the invite to future events! Tell us a bit about yourself
+      and what makes you interested in joining the group.
     </p>
     ${form}
   </section>`
